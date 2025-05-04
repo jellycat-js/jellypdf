@@ -25,6 +25,15 @@ const external = [
 	/node_modules\/chromium-bidi\/.*/
 ]
 
+const rewriteDynamicImportsPlugin = (outDir) => ({
+	name: 'rewrite-dynamic-imports',
+	renderDynamicImport: ({ targetModuleId }) => {
+		if (!targetModuleId || !targetModuleId.startsWith('./handlers/')) return null
+		const ext = outDir.includes('cjs') ? '.cjs' : '.mjs'
+		return { left: 'import(', right: ` + "${ext}")` }
+	}
+})
+
 const makePlugins = (outDir) => [
 	json(),
 	typescript({
@@ -38,7 +47,9 @@ const makePlugins = (outDir) => [
 	}),
 	commonjs({ 
 		ignore: ['chromium-bidi']
-	})
+	}),
+	rewriteDynamicImportsPlugin(outDir),
+	terser()
 ]
 
 export default defineConfig([
@@ -53,10 +64,7 @@ export default defineConfig([
     		chunkFileNames: '[name]-[hash].mjs'
 		},
 		external,
-		plugins: [
-			...makePlugins('dist/esm'),
-			terser()
-		]
+		plugins: makePlugins('dist/esm')
 	},
 	// CJS build
 	{
@@ -69,10 +77,7 @@ export default defineConfig([
     		chunkFileNames: '[name]-[hash].cjs'
 		},
 		external,
-		plugins: [
-			...makePlugins('dist/cjs'),
-			terser()
-		]
+		plugins: makePlugins('dist/cjs')
 	},
 	// CLI build
 	{
@@ -87,9 +92,6 @@ export default defineConfig([
 			...external,
 			'./jellypdf'
 		],
-		plugins: [
-			...makePlugins('dist/cli'),
-			terser()
-		]
+		plugins: makePlugins('dist/cli')
 	}
 ])

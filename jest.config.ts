@@ -13,14 +13,7 @@ const config: Config = {
         '^@constants$': '<rootDir>/src/constants.ts',
         '^@core/(.*)$': '<rootDir>/src/core/$1',
         '^@handlers/(.*)$': '<rootDir>/src/handlers/$1'
-    },
-    coverageDirectory: '<rootDir>/coverage',
-    collectCoverage: true,
-    collectCoverageFrom: [
-        'src/**/*.{ts}',
-        '!src/types.ts'
-    ],
-    coverageReporters: ['lcov', 'text']
+    }
 }
 
 export default config

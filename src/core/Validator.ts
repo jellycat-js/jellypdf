@@ -50,12 +50,6 @@ export class Validator
 			throw ErrorManager.create(E.CONFIG_INVALID, `Option "baseMargin" must be a number`)
 		}
 
-		CONFIG.verbose && console.log('Validating timeout...')
-		if (options.timeout !== null && typeof options.timeout !== 'number') {
-			CONFIG.verbose && console.log(`Invalid timeout: ${options.timeout}`)
-			throw ErrorManager.create(E.CONFIG_INVALID, `Option "timeout" must be a number or null`)
-		}
-
 		CONFIG.verbose && console.log('Validating verbose...')
 		if (typeof options.verbose !== 'boolean') {
 			CONFIG.verbose && console.log(`Invalid verbose: ${options.verbose}`)

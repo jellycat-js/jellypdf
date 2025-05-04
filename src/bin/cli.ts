@@ -77,12 +77,6 @@ const defineOptions = (yargs: any)=> {
             describe: 'Enable automatic margin calculation based on header/footer'
         })
 
-        .option('timeout', {
-            type: 'number',
-            default: DEFAULT_OPTIONS.timeout,
-            describe: 'Timeout for PDF generation in milliseconds'
-        })
-
 	    .option('verbose', { 
 	        alias: 'v',
 	        type: 'boolean',
@@ -95,7 +89,9 @@ const runGenerator = async (argv: TJellyPdfOptions) => {
 
 	try
 	{
-		const outputPath = await generatePdf(argv)
+		const { input, output, ...providedOptions } = argv
+
+		const outputPath = await generatePdf(input, output, providedOptions)
 
 		console.log(`PDF successfully generated at: ${outputPath}`)
 	}

@@ -164,7 +164,6 @@ describe('PuppeteerHandler', () => {
 				header: '<h1>Header</h1>',
 				footer: '<h1>Footer</h1>',
 				engine: 'puppeteer' as const,
-				timeout: 3000,
 				autoCalcMargin: true,
 				baseMargin: 10,
 				verbose: false
@@ -192,9 +191,6 @@ describe('PuppeteerHandler', () => {
 
 			expect(map.get('footerTemplate')).toBeDefined()
 			expect(map.get('footerTemplate')!(args)).toBe('<h1>Footer</h1>')
-
-			expect(map.get('timeout')).toBeDefined()
-			expect(map.get('timeout')!(args)).toBe(3000)
 
 			expect(map.get('margin')).toBeDefined()
 			expect(map.get('margin')!(args)).toEqual({

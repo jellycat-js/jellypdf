@@ -21,7 +21,6 @@ describe('Configurator', () => {
         header: '<div>header</div>',
         footer: '<div>footer</div>',
         engine: 'puppeteer' as const,
-        timeout: 3000,
         autoCalcMargin: true,
         baseMargin: 10,
         verbose: false

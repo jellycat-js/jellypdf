@@ -5,14 +5,17 @@ import { Validator } from '@core/Validator'
 import { Generator } from '@core/Generator'
 import { config as CONFIG } from '@config'
 
-export async function generatePdf(providedOptions: Partial<TJellyPdfOptions>): Promise<string>
+export async function generatePdf(input: string, output: string, providedOptions: Partial<TJellyPdfOptions>): Promise<string>
 {
+
     let options: TJellyPdfOptions
 
     try
     {
         options = Validator.validate({ 
             ...DEFAULT_OPTIONS, 
+            input, 
+            output, 
             ...providedOptions
         })
 

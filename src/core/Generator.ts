@@ -1,4 +1,4 @@
-import { type TJellyPdfOptions, type TEngineHandler } from '@types'
+import { type TJellyPdfOptions, type TEngineHandlerModule, type TEngineHandler, type TEngine } from '@types'
 import { ErrorManager } from './ErrorManager'
 import { Configurator } from './Configurator'
 import { ERROR_TYPES as E } from '@constants'
@@ -29,8 +29,15 @@ export class Generator
 	{
 		CONFIG.verbose && console.log(`Selecting handler for engine: ${this.args.engine}`)
 
+		const handlerMap: Record<TEngine, () => Promise<TEngineHandlerModule>> = {
+			puppeteer: () => import('../handlers/PuppeteerHandler'),
+			playwright: () => import('../handlers/PlaywrightHandler')
+		}
+
+		const engine = this.args.engine.toLowerCase() as TEngine
+
 		return await ErrorManager.tryOrThrow(async () => {
-			const { default: HandlerClass } = await import(`../handlers/${capitalize(this.args.engine)}Handler`)
+			const { default: HandlerClass } = await handlerMap[engine]()
 			return new HandlerClass()
 		}, E.HANDLER_ERROR)
 	}

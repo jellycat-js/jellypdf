@@ -30,7 +30,6 @@ export const DEFAULT_OPTIONS: Omit<TJellyPdfOptions, 'input' | 'output'> = {
 	landscape: false,
 	baseMargin: 15,
 	autoCalcMargin: true,
-	timeout: null,
 	verbose: false
 } as const
 

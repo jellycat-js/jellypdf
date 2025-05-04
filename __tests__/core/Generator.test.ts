@@ -33,7 +33,6 @@ describe('Generator', () => {
         dpi: 96,
         landscape: false,
         engine: 'puppeteer' as const,
-        timeout: 3000,
         autoCalcMargin: false,
         baseMargin: 10,
         verbose: false,

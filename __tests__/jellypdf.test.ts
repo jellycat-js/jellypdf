@@ -27,9 +27,10 @@ jest.mock('@core/Generator', () => ({
 
 describe('jellypdf generatePdf', () => {
 
-    const baseArgs: TJellyPdfOptions = {
-        input: 'file.html',
-        output: 'file.pdf',
+    const input = 'file.html'
+    const output = 'file.pdf'
+
+    const baseArgs: Partial<TJellyPdfOptions> = {
         header: null,
         footer: null,
         dpi: 96,
@@ -38,7 +39,6 @@ describe('jellypdf generatePdf', () => {
         engine: 'puppeteer',
         baseMargin: 10,
         autoCalcMargin: true,
-        timeout: 5000,
         verbose: false
     }
 
@@ -48,9 +48,9 @@ describe('jellypdf generatePdf', () => {
 
     it('should instantiate Generator with proper args and call generate()', async () => {
 
-        await generatePdf(baseArgs)
+        await generatePdf(input, output, baseArgs)
 
-        expect(Generator).toHaveBeenCalledWith(baseArgs)
+        expect(Generator).toHaveBeenCalledWith({ input, output, ...baseArgs })
         expect(mockGenerate).toHaveBeenCalled()
     })
 
@@ -63,7 +63,7 @@ describe('jellypdf generatePdf', () => {
 
         ErrorManager.create = jest.fn().mockReturnValue(mockJellyPdfError)
 
-        const caught = await generatePdf(baseArgs).catch(e => e)
+        const caught = await generatePdf(input, output, baseArgs).catch(e => e)
         expect(caught).toBeInstanceOf(JellyPdfError)
     })
 
@@ -74,7 +74,7 @@ describe('jellypdf generatePdf', () => {
 
         const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation(() => {})
 
-        await expect(generatePdf({ ...baseArgs, verbose: true })).rejects.toThrow(jellyPdfError)
+        await expect(generatePdf(input, output, { ...baseArgs, verbose: true })).rejects.toThrow(jellyPdfError)
 
         expect(consoleErrorMock).toHaveBeenCalledWith(jellyPdfError)
         consoleErrorMock.mockRestore()

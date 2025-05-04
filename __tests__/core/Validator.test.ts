@@ -74,12 +74,6 @@ describe('Validator', () => {
 	    expect(ErrorManager.create).toHaveBeenCalledWith(E.CONFIG_INVALID, expect.stringContaining('baseMargin'))
 	})
 
-	it('should throw an error when timeout is not a number or null', () => {
-		const options = override({ timeout: 'unexpected' as any })
-	    expect(() => Validator.validate(options)).toThrow()
-	    expect(ErrorManager.create).toHaveBeenCalledWith(E.CONFIG_INVALID, expect.stringContaining('timeout'))
-	})
-
 	it('should throw an error when verbose is not a boolean', () => {
 		const options = override({ verbose: 'unexpected' as any })
 	    expect(() => Validator.validate(options)).toThrow()

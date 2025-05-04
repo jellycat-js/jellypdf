@@ -73,9 +73,8 @@ If you are using an environment that supports **ESM modules** (e.g., with `"type
 
 import { generatePdf } from '@jellycat-js/jellypdf'
 
-const outputPath = await generatePdf({
-    input: 'https://example.com',
-    output: 'output.pdf'
+const outputPath = await generatePdf('./input.html', 'output.pdf', {
+    // ...options
 })
 
 ```
@@ -88,9 +87,8 @@ If you are using CommonJS, you can use require like this:
 
 const { generatePdf } = require('@jellycat-js/jellypdf')
 
-const outputPath = await generatePdf({
-    input: 'https://example.com',
-    output: 'output.pdf'
+const outputPath = await generatePdf('./input.html', 'output.pdf', {
+    // ...options
 })
 
 ```
@@ -130,17 +128,14 @@ Here is a detailed table of the available options to customize PDF generation:
 
 | Option                 | Type       | Description                                                                                     | Default Value     |
 |------------------------|------------|-------------------------------------------------------------------------------------------------|-------------------|
-| **input**              | `string`   | URL or path to an HTML file to convert                                                          | **Required**      |
-| **output**             | `string`   | Path where the PDF will be saved                                                                | **Required**      |
-| **header**             | `string`   | Path to the header HTML file                                                                    | `null`            |
-| **footer**             | `string`   | Path to the footer HTML file                                                                    | `null`            |
+| **engine**             | `string`   | Generation engine (puppeteer or playwright)                                                     | `puppeteer`       |
 | **dpi**                | `number`   | DPI for the conversion                                                                          | `96`              |
 | **format**             | `string`   | Paper format (`Letter`, `Legal`, `Tabloi`, `Ledger`, `A0`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`.) | `A4`              |
 | **landscape**          | `boolean`  | Whether the PDF should be in landscape orientation                                              | `false`           |
 | **base-margin**        | `number`   | Base margin in mm                                                                               | `10`              |
-| **engine**             | `string`   | Generation engine (puppeteer or playwright)                                                     | `puppeteer`       |
+| **header**             | `string`   | Path to the header HTML file                                                                    | `null`            |
+| **footer**             | `string`   | Path to the footer HTML file                                                                    | `null`            |
 | **auto-calc-margin**   | `boolean`  | Whether to automatically calculate margin based on header/footer                                | `true`            |
-| **timeout**            | `number`   | Timeout for PDF generation in milliseconds                                                      | `30000`           |
 | **verbose**            | `boolean`  | Enable detailed logging                                                                         | `false`           |
   
 **Note:**  

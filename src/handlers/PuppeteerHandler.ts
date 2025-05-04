@@ -28,7 +28,6 @@ export default class PuppeteerHandler implements TEngineHandler
 		optionsMap.set('displayHeaderFooter', ({ header, footer }: TJellyPdfOptions) => !!header || !!footer)
 		optionsMap.set('headerTemplate', ({ header }: TJellyPdfOptions) => header ?? '') 
 		optionsMap.set('footerTemplate', ({ footer }: TJellyPdfOptions) => footer ?? '') 
-		optionsMap.set('timeout', ({ timeout }: TJellyPdfOptions) => timeout)
 		optionsMap.set('margin', ({ baseMargin }: TJellyPdfOptions) => ({
 			top: baseMargin,
 			bottom: baseMargin,

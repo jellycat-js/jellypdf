@@ -21,7 +21,6 @@ export type TJellyPdfOptions = {
 	landscape: boolean
 	baseMargin: number
 	autoCalcMargin: boolean
-	timeout: number | null
 	verbose: boolean
 }
 
@@ -40,7 +39,6 @@ export interface TPdfOptions
 	displayHeaderFooter?: boolean
 	headerTemplate?: string
 	footerTemplate?: string
-	timeout?: number
 	[key: string]: any 
 }
 
@@ -50,3 +48,5 @@ export interface TEngineHandler
 	renderPdf(input: string, pdfOptions: TPdfOptions): Promise<string>
 	calcHtmlHeight(htmlPath: string): Promise<number>
 }
+
+export type TEngineHandlerModule = { default: new () => TEngineHandler }

@@ -168,7 +168,6 @@ describe('PlaywrightHandler', () => {
 				header: '<h1>Header</h1>',
 				footer: '<h1>Footer</h1>',
 				engine: 'playwright' as const,
-				timeout: 3000,
 				autoCalcMargin: true,
 				baseMargin: 10,
 				verbose: false
