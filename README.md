@@ -54,7 +54,7 @@ This will allow you to run the `jellypdf-cli` command directly in your terminal.
 Once installed, you can use the tool via the command line to generate PDFs:
 
 ```bash
-jellypdf-cli <input> <output> [options]
+jellypdf-cli <input> [<output>] [options]
 ```
 
 #### Arguments
