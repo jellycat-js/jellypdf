@@ -12,7 +12,7 @@ export type TErrorObject = (typeof ERROR_TYPES)[keyof typeof ERROR_TYPES]
 
 export type TJellyPdfOptions = {
 	input: string
-	output: string
+	output?: string | null
 	header: string | null
 	footer: string | null
 	dpi: number
@@ -45,7 +45,7 @@ export interface TPdfOptions
 export interface TEngineHandler
 {
 	getOptionsMap(): Map<string, (args: TJellyPdfOptions) => TPrimitive | TPrimitive>
-	renderPdf(input: string, pdfOptions: TPdfOptions): Promise<string>
+	renderPdf(input: string, pdfOptions: TPdfOptions): Promise<string | Buffer>
 	calcHtmlHeight(htmlPath: string): Promise<number>
 }
 

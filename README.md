@@ -19,7 +19,7 @@ This project provides a tool for generating PDFs from HTML content, available bo
 - Convert HTML to PDF with customizable options (headers, footers, DPI, etc.).
 - Supports both **Puppeteer** and **Playwright** engines for PDF generation.
 - Adjustable DPI, paper format, margins, and other settings.
-- The output PDF can be saved to a specified location.
+- The output PDF can be saved to a specified location or returned as a Buffer.
 - Can be used via the command line or as part of a Node.js application.
 
 ## Installation
@@ -54,13 +54,28 @@ This will allow you to run the `jellypdf-cli` command directly in your terminal.
 Once installed, you can use the tool via the command line to generate PDFs:
 
 ```bash
-jellypdf-cli --input <url_or_html_file> --output <output_path> [options]
+jellypdf-cli <input_url_or_html_file> <output_path> [options]
 ```
+
+#### Arguments
+
+- `input` (string):
+    The URL or HTML file path to generate the PDF from.
+
+- `output` (string or omitted):
+    A string representing the file path where the PDF should be saved.
+    If omitted, the PDF will be returned as a Buffer instead of being saved to the file system.
 
 #### Example
 
 ```bash
-jellypdf-cli --input 'https://example.com' --output './output.pdf'
+jellypdf-cli 'https://example.com' './output.pdf'
+```
+
+If you want the output to be returned as a buffer instead of a file, set the output argument to null:
+
+```bash
+jellypdf-cli 'https://example.com'
 ```
 
 ### API
@@ -73,10 +88,6 @@ If you are using an environment that supports **ESM modules** (e.g., with `"type
 
 import { generatePdf } from '@jellycat-js/jellypdf'
 
-const outputPath = await generatePdf('./input.html', 'output.pdf', {
-    // ...options
-})
-
 ```
 
 #### CommonJS Import (require)
@@ -87,7 +98,29 @@ If you are using CommonJS, you can use require like this:
 
 const { generatePdf } = require('@jellycat-js/jellypdf')
 
+```
+
+### Output
+
+#### For buffer output
+
+To save the PDF to a file, provide a string with the file path as the output argument.
+
+```js
+
 const outputPath = await generatePdf('./input.html', 'output.pdf', {
+    // ...options
+})
+
+```
+
+#### For path string output
+
+To receive the PDF as a buffer, pass null as the output argument.
+
+```js
+
+const buffer = await generatePdf('./input.html', null, {
     // ...options
 })
 

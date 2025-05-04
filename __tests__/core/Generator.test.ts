@@ -8,7 +8,6 @@ import { TEngineHandler } from '@types'
 
 jest.mock('@core/ErrorManager', () => ({
     ErrorManager: {
-        // create: jest.fn(),
         tryOrThrow: jest.fn()
     }
 }))

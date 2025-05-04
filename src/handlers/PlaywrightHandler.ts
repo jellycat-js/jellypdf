@@ -38,7 +38,7 @@ export default class PlaywrightHandler implements TEngineHandler
 		return optionsMap
 	}
 
-	async renderPdf(input: string, pdfOption: TPdfOptions): Promise<string>
+	async renderPdf(input: string, pdfOptions: TPdfOptions): Promise<string | Buffer>
 	{
 		CONFIG.verbose && console.log(`Navigating to ${input}...`)
 
@@ -50,13 +50,21 @@ export default class PlaywrightHandler implements TEngineHandler
 
 			CONFIG.verbose && console.log('Generating PDF...')
 
-			await ErrorManager.tryOrThrow(async () => {
-				await page.pdf(pdfOption)
+			const result = await ErrorManager.tryOrThrow(async () => {
+				
+				if (pdfOptions.path === null) {
+	                delete pdfOptions.path
+	                return await page.pdf(pdfOptions)
+	            }
+
+                await page.pdf(pdfOptions)
+                return pdfOptions.path
+
 			}, E.GENERATION_FAILED)
 
 			CONFIG.verbose && console.log('PDF generation completed.')
 
-			return pdfOption.path
+			return result
 		})
 	}
 

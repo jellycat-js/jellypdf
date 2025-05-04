@@ -5,19 +5,20 @@ import { TJellyPdfOptions } from '@types'
 
 export class Validator
 {
-	static readonly requiredOptions: (keyof TJellyPdfOptions)[] = ['input', 'output']
-
 	static validate(options: Partial<TJellyPdfOptions>): TJellyPdfOptions
 	{
 		CONFIG.verbose && console.log('Validating options...')
 
-		const requiredOptions: (keyof TJellyPdfOptions)[] = Validator.requiredOptions
-		for (const requiredOption of requiredOptions)
-		{
-			if (!options[requiredOption]) {
-				CONFIG.verbose && console.log(`Validation failed: Missing required option "${requiredOption}"`)
-				throw ErrorManager.create(E.CONFIG_INVALID, `Option "${requiredOption}" is required`)
-			}
+		CONFIG.verbose && console.log('Validating input...')
+		if (options.input == null) {
+			CONFIG.verbose && console.log('Validation failed: Missing required option "input"')
+			throw ErrorManager.create(E.CONFIG_INVALID, 'Option "input" is required')
+		}
+
+		CONFIG.verbose && console.log('Validating output...')
+		if (options.output != undefined && options.output != null && typeof options.output !== 'string') {
+			CONFIG.verbose && console.log('Validation failed: Option "output" must be a string or null')
+			throw ErrorManager.create(E.CONFIG_INVALID, 'Option "output" must be a string or null')
 		}
 
 		CONFIG.verbose && console.log('Validating format...')

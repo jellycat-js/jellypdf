@@ -10,7 +10,7 @@ export class Generator
 		private args: TJellyPdfOptions
 	){}
 
-	async generate(): Promise<string>
+	async generate(): Promise<string | Buffer>
 	{
 		CONFIG.verbose && console.log('Starting PDF generation...')
 

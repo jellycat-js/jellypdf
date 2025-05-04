@@ -20,7 +20,7 @@ const defineOptions = (yargs: any)=> {
         .positional('output', {
         	describe: 'Path to save the PDF',
         	type: 'string',
-        	demandOption: true
+        	demandOption: false
     	})
 
 	    .option('header', { 
@@ -89,7 +89,7 @@ const runGenerator = async (argv: TJellyPdfOptions) => {
 
 	try
 	{
-		const { input, output, ...providedOptions } = argv
+		const { input, output = null, ...providedOptions } = argv
 
 		const outputPath = await generatePdf(input, output, providedOptions)
 
