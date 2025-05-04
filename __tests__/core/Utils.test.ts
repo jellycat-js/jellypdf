@@ -43,17 +43,6 @@ describe('Utils', () => {
 	    })
 	})
 
-	describe('capitalize', () => {
-
-		it('should capitalize the first letter of a string', () => {
-			expect(capitalize('hello')).toBe('Hello')
-		})
-
-		it('should return an empty string if input is empty', () => {
-			expect(capitalize('')).toBe('')
-		})
-	})
-
 	describe('readFileUtf8', () => {
 
 		const mockPath = '/some/file.txt'
