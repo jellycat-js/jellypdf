@@ -1,0 +1,33 @@
+{
+	"compilerOptions": {
+		"target": "ES2022",
+		"module": "ESNext",
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"strict": true,
+		"sourceMap": true,
+		"declaration": true,
+		"baseUrl": ".",
+	    "paths": {
+	    	"@jellypdf": ["src/jellypdf.ts"],
+	    	"@core/*": ["src/core/*"],
+      		"@handlers/*": ["src/handlers/*"],
+      		"@config": ["src/config.ts"],
+	    	"@types": ["src/types.ts"],
+	    	"@constants": ["src/constants.ts"]
+	    },
+	    "skipLibCheck": true,
+		"removeComments": true,
+   		"isolatedModules": true,
+		"resolveJsonModule": true,
+		"allowJs": false
+	},
+	"include": [
+		"src/**/*"
+	],
+	"exclude": [
+	    "node_modules",
+	    "dist",
+	    "**/*.test.ts"
+	]
+}

@@ -1,0 +1,91 @@
+import typescript from '@rollup/plugin-typescript'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import terser from '@rollup/plugin-terser'
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
+import { defineConfig } from 'rollup'
+
+const input = {
+	index: './src/jellypdf.ts',
+	'bin/cli': './src/bin/cli.ts',
+	'handlers/PuppeteerHandler': './src/handlers/PuppeteerHandler.ts',
+	'handlers/PlaywrightHandler': './src/handlers/PlaywrightHandler.ts'
+}
+
+const external = [
+	'yargs',
+	'path',
+	'fs',
+	'puppeteer',
+	'playwright-core',
+	'playwright-chromium',
+	'chromium-bidi',
+	/node_modules\/playwright-core\/.*/,
+	/node_modules\/playwright-chromium\/.*/,
+	/node_modules\/chromium-bidi\/.*/
+]
+
+const makePlugins = (outDir) => [
+	json(),
+	typescript({
+		tsconfig: './tsconfig.json',
+		outDir: outDir,
+		declaration: true,
+		declarationDir: outDir,
+	}),
+	nodeResolve({ 
+		preferBuiltins: true
+	}),
+	commonjs({ 
+		ignore: ['chromium-bidi']
+	})
+]
+
+export default defineConfig([
+	// ESM build
+	{
+		input,
+		output: {
+			dir: 'dist/esm',
+			format: 'esm',
+			sourcemap: true
+		},
+		external,
+		plugins: [
+			...makePlugins('dist/esm'),
+			terser()
+		]
+	},
+	// CJS build
+	{
+		input,
+		output: {
+			dir: 'dist/cjs',
+			format: 'cjs',
+			sourcemap: true
+		},
+		external,
+		plugins: [
+			...makePlugins('dist/cjs'),
+			terser()
+		]
+	},
+	// CLI build
+	{
+		input,
+		output: {
+			dir: 'dist/cli',
+			format: 'esm',
+			sourcemap: true,
+			entryFileNames: 'jellypdf-cli.js'
+		},
+		external: [
+			...external,
+			'./jellypdf'
+		],
+		plugins: [
+			...makePlugins('dist/cli'),
+			terser()
+		]
+	}
+])
