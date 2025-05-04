@@ -3,7 +3,6 @@ import { ErrorManager } from './ErrorManager'
 import { Configurator } from './Configurator'
 import { ERROR_TYPES as E } from '@constants'
 import { config as CONFIG } from '@config'
-import { capitalize } from './Utils'
 
 export class Generator
 {
