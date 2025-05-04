@@ -48,7 +48,9 @@ export default defineConfig([
 		output: {
 			dir: 'dist/esm',
 			format: 'esm',
-			sourcemap: true
+			sourcemap: true,
+			entryFileNames: '[name].mjs',
+    		chunkFileNames: '[name]-[hash].mjs'
 		},
 		external,
 		plugins: [
@@ -62,7 +64,9 @@ export default defineConfig([
 		output: {
 			dir: 'dist/cjs',
 			format: 'cjs',
-			sourcemap: true
+			sourcemap: true,
+			entryFileNames: '[name].cjs',
+    		chunkFileNames: '[name]-[hash].cjs'
 		},
 		external,
 		plugins: [
