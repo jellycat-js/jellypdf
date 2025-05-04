@@ -3,6 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/@jellydock/jellypdf)](https://www.npmjs.com/package/@jellydock/jellypdf)
 [![Node.js](https://img.shields.io/badge/node-20+-brightgreen)](https://nodejs.org/)
 [![CI](https://github.com/jellydock/jellypdf/actions/workflows/ci.yml/badge.svg)](https://github.com/jellydock/jellypdf/actions/workflows/ci.yml)
+![CI](https://img.shields.io/github/workflow/status/jellydock/jellypdf/CI?logo=github&label=build)
 [![license](https://img.shields.io/npm/l/@jellydock/jellypdf)](./LICENSE)
 
 A fast and flexible PDF generation toolkit for Node.js with both CLI and API interfaces.
