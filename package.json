@@ -80,10 +80,10 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/ton-org/jellypdf.git"
+		"url": "https://github.com/jellydock/jellypdf.git"
 	},
 	"bugs": {
-		"url": "https://github.com/ton-org/jellypdf/issues"
+		"url": "https://github.com/jellydock/jellypdf/issues"
 	},
-	"homepage": "https://github.com/ton-org/jellypdf#readme"
+	"homepage": "https://github.com/jellydock/jellypdf#readme"
 }
