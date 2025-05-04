@@ -59,10 +59,10 @@ jellypdf-cli <input> <output> [options]
 
 #### Arguments
 
-- **input** (`string`):  
+- **input** (`string`)  
     The URL or HTML file path to generate the PDF from.
 
-- **output** (`string` or omitted):  
+- **output** (`string` or omitted)  
     A `string` representing the file path where the PDF should be saved.
     If omitted, the PDF will be returned as a Buffer instead of being saved to the file system.
 
