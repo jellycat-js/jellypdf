@@ -1,10 +1,10 @@
 # JellyPDF
 
-[![npm version](https://img.shields.io/npm/v/@jellycat-js/jellypdf)](https://www.npmjs.com/package/@jellycat-js/jellypdf)
+[![npm version](https://img.shields.io/npm/v/@jellydock/jellypdf)](https://www.npmjs.com/package/@jellydock/jellypdf)
 [![Node.js](https://img.shields.io/badge/node-20+-brightgreen)](https://nodejs.org/)
-[![CI](https://github.com/jellycat/jellypdf/actions/workflows/ci.yml/badge.svg)](https://github.com/jellycat/jellypdf/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/jellycat/jellypdf/branch/main/graph/badge.svg)](https://codecov.io/gh/jellycat/jellypdf)
-[![license](https://img.shields.io/npm/l/@jellycat-js/jellypdf)](./LICENSE)
+[![CI](https://github.com/jellydock/jellypdf/actions/workflows/ci.yml/badge.svg)](https://github.com/jellydock/jellypdf/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/jellydock/jellypdf/branch/main/graph/badge.svg)](https://codecov.io/gh/jellydock/jellypdf)
+[![license](https://img.shields.io/npm/l/@jellydock/jellypdf)](./LICENSE)
 
 A fast and flexible PDF generation toolkit for Node.js with both CLI and API interfaces.
 
