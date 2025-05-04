@@ -72,7 +72,7 @@ jellypdf-cli <input_url_or_html_file> <output_path> [options]
 jellypdf-cli 'https://example.com' './output.pdf'
 ```
 
-If you want the output to be returned as a buffer instead of a file, set the output argument to null:
+If you want the output to be returned as a buffer instead of a file, omit the output argument:
 
 ```bash
 jellypdf-cli 'https://example.com'
@@ -102,9 +102,9 @@ const { generatePdf } = require('@jellycat-js/jellypdf')
 
 ### Output
 
-#### For buffer output
+#### For path string output
 
-To save the PDF to a file, provide a string with the file path as the output argument.
+To receive the PDF as a buffer, pass null as the output argument.
 
 ```js
 
@@ -114,9 +114,9 @@ const outputPath = await generatePdf('./input.html', 'output.pdf', {
 
 ```
 
-#### For path string output
+#### For buffer output
 
-To receive the PDF as a buffer, pass null as the output argument.
+To save the PDF to a file, provide a string with the file path as the output argument.
 
 ```js
 
