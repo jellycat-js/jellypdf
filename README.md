@@ -54,16 +54,16 @@ This will allow you to run the `jellypdf-cli` command directly in your terminal.
 Once installed, you can use the tool via the command line to generate PDFs:
 
 ```bash
-jellypdf-cli <input_url_or_html_file> <output_path> [options]
+jellypdf-cli <input> <output> [options]
 ```
 
 #### Arguments
 
-- `input` (string):
+- **input** (`string`):
     The URL or HTML file path to generate the PDF from.
 
-- `output` (string or omitted):
-    A string representing the file path where the PDF should be saved.
+- **output** (`string` or omitted):
+    A `string` representing the file path where the PDF should be saved.
     If omitted, the PDF will be returned as a Buffer instead of being saved to the file system.
 
 #### Example
@@ -207,8 +207,8 @@ Feel free to use, modify, and distribute it as per the terms of the license.
 
 ## Acknowledgments
 
-- **Puppeteer** – A headless Chrome Node.js API used for generating PDFs by rendering HTML content in a headless browser.  
+- **[Puppeteer](https://pptr.dev/)** – A headless Chrome Node.js API used for generating PDFs by rendering HTML content in a headless browser.  
 
-- **Playwright** – A browser automation library used as an alternative engine for generating PDFs, offering additional flexibility and support for cross-browser rendering.  
+- **[Playwright](https://playwright.dev/)** – A browser automation library used as an alternative engine for generating PDFs, offering additional flexibility and support for cross-browser rendering.  
 
 - Thanks to the open-source community for making these tools available for free.
