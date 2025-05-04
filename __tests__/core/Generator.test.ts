@@ -18,11 +18,6 @@ const mockHandler: TEngineHandler = {
     calcHtmlHeight: jest.fn()
 }
 
-jest.mock('@core/Utils', () => ({
-    ...jest.requireActual('@core/Utils'),
-    capitalize: (str: string) => str.charAt(0).toUpperCase() + str.slice(1)
-}))
-
 describe('Generator', () => {
 
     const baseArgs = {
@@ -101,6 +96,58 @@ describe('Generator', () => {
         const generator = new Generator(baseArgs)
 
         await expect(generator.generate()).rejects.toThrow(renderError)
+
+        ;(Generator as any).prototype['selectHandler'] = originalSelectHandler
+    })
+
+    it('should generate PDF as a Buffer when output is omitted', async () => {
+        
+        const mockTryOrThrow = ErrorManager.tryOrThrow as jest.Mock
+        mockTryOrThrow.mockImplementation(async fn => await fn())
+
+        const originalSelectHandler = (Generator as any).prototype['selectHandler']
+        ;(Generator as any).prototype['selectHandler'] = async function (this: any) {
+            return mockHandler
+        }
+
+        jest.spyOn(Configurator.prototype, 'getOptions').mockResolvedValue({
+            margin: { top: '10mm', bottom: '10mm', left: '10mm', right: '10mm' }
+        })
+
+        const expectedBuffer = Buffer.from('pdf-content')
+        mockHandler.renderPdf.mockResolvedValue(expectedBuffer)
+
+        const generator = new Generator({ ...baseArgs, output: null })
+        const result = await generator.generate()
+
+        expect(mockHandler.renderPdf).toHaveBeenCalled()
+        expect(result).toBeInstanceOf(Buffer)
+
+        ;(Generator as any).prototype['selectHandler'] = originalSelectHandler
+    })
+
+    it('should generate PDF and save to the specified path', async () => {
+        
+        const mockTryOrThrow = ErrorManager.tryOrThrow as jest.Mock
+        mockTryOrThrow.mockImplementation(async fn => await fn())
+
+        const originalSelectHandler = (Generator as any).prototype['selectHandler']
+        ;(Generator as any).prototype['selectHandler'] = async function (this: any) {
+            return mockHandler
+        }
+
+        jest.spyOn(Configurator.prototype, 'getOptions').mockResolvedValue({
+            margin: { top: '10mm', bottom: '10mm', left: '10mm', right: '10mm' }
+        })
+
+        const expectedPdfPath = '/fake/path/output.pdf'
+        mockHandler.renderPdf.mockResolvedValue(expectedPdfPath)
+
+        const generator = new Generator({ ...baseArgs, output: 'output.pdf' })
+        const result = await generator.generate()
+
+        expect(mockHandler.renderPdf).toHaveBeenCalled()
+        expect(result).toBe(expectedPdfPath)
 
         ;(Generator as any).prototype['selectHandler'] = originalSelectHandler
     })
