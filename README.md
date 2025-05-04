@@ -48,6 +48,34 @@ This will allow you to run the `jellypdf-cli` command directly in your terminal.
 - **Node.js version 20 or above** is required to run this project.
 - The package supports both **ESM (ECMAScript Modules)** and **MJS**.
 
+## TypeScript Support
+
+`jellycat-js/jellypdf` is fully written in TypeScript and includes comprehensive type definitions.
+This ensures seamless integration and type safety when used in TypeScript projects.
+
+### Importing Types
+
+You can import types directly from the package to leverage TypeScript's static typing:
+
+```ts
+import type { JellyPDFOptions } from '@jellycat-js/jellypdf'
+```
+
+This allows for enhanced code completion and type checking in your development environment.
+
+### Type Definitions
+
+The type definitions are included in the package and are automatically recognized by TypeScript. 
+You don't need to install any additional `@types` packages. The `package.json` specifies the types entry:
+
+```json
+{
+  "types": "./dist/types/jellypdf.d.ts"
+}
+```
+
+This setup ensures that TypeScript can locate and utilize the type definitions without additional configuration.
+
 ## Usage
 
 ### CLI
