@@ -1,16 +1,13 @@
-name: CI/CD - Release
+name: CI - Dev Branch Checks
 
 on:
   push:
-    tags:
-      - 'v*'
     branches:
-      - main
       - develop  
 
 jobs:
 
-  build:
+  test-and-build:
     runs-on: ubuntu-latest
 
     steps:
