@@ -26,4 +26,4 @@ jobs:
         run: |
           NEW_TAG=$(npm version patch)
           echo "New tag created: $NEW_TAG"
-          git push origin $NEW_TAG
+          git push main --follow-tags
