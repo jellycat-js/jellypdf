@@ -2,15 +2,37 @@ import typescript from '@rollup/plugin-typescript'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import terser from '@rollup/plugin-terser'
 import commonjs from '@rollup/plugin-commonjs'
+import alias from '@rollup/plugin-alias'
+import { dts } from "rollup-plugin-dts"
 import json from '@rollup/plugin-json'
 import { defineConfig } from 'rollup'
+import path from 'path'
 
-const input = {
-	index: './src/jellypdf.ts',
-	'bin/cli': './src/bin/cli.ts',
-	'handlers/PuppeteerHandler': './src/handlers/PuppeteerHandler.ts',
-	'handlers/PlaywrightHandler': './src/handlers/PlaywrightHandler.ts'
-}
+const rewriteDynImport = (outDir) => ({
+	name: 'rewrite-dynamic-imports',
+	renderDynamicImport: ({ targetModuleId }) => {
+		if (!targetModuleId || !targetModuleId.startsWith('./handlers/')) return null
+		const ext = outDir.includes('cjs') ? '.cjs' : '.mjs'
+		return { left: 'import(', right: ` + "${ext}")` }
+	}
+})
+
+const makePlugins = (outDir) => [
+	json(),
+	typescript({
+		tsconfig: './tsconfig.json',
+		outDir: outDir,
+		declaration: false
+	}),
+	nodeResolve({ 
+		preferBuiltins: true 
+	}),
+	commonjs({ 
+		ignore: ['chromium-bidi'] 
+	}),
+	rewriteDynImport(outDir),
+	terser()
+]
 
 const external = [
 	'yargs',
@@ -25,73 +47,71 @@ const external = [
 	/node_modules\/chromium-bidi\/.*/
 ]
 
-const rewriteDynamicImportsPlugin = (outDir) => ({
-	name: 'rewrite-dynamic-imports',
-	renderDynamicImport: ({ targetModuleId }) => {
-		if (!targetModuleId || !targetModuleId.startsWith('./handlers/')) return null
-		const ext = outDir.includes('cjs') ? '.cjs' : '.mjs'
-		return { left: 'import(', right: ` + "${ext}")` }
-	}
-})
+const builds = {
 
-const makePlugins = (outDir) => [
-	json(),
-	typescript({
-		tsconfig: './tsconfig.json',
-		outDir: outDir,
-		declaration: true,
-		declarationDir: outDir,
-	}),
-	nodeResolve({ 
-		preferBuiltins: true
-	}),
-	commonjs({ 
-		ignore: ['chromium-bidi']
-	}),
-	rewriteDynamicImportsPlugin(outDir),
-	terser()
-]
-
-export default defineConfig([
-	// ESM build
-	{
-		input,
+	esm: {
+		input: {
+			index: './src/jellypdf.ts',
+			'handlers/PuppeteerHandler': './src/handlers/PuppeteerHandler.ts',
+			'handlers/PlaywrightHandler': './src/handlers/PlaywrightHandler.ts'
+		},
 		output: {
 			dir: 'dist/esm',
 			format: 'esm',
 			sourcemap: true,
 			entryFileNames: '[name].mjs',
-    		chunkFileNames: '[name]-[hash].mjs'
+			chunkFileNames: '[name]-[hash].mjs'
 		},
 		external,
 		plugins: makePlugins('dist/esm')
 	},
-	// CJS build
-	{
-		input,
+
+	cjs: {
+		input: {
+			index: './src/jellypdf.ts',
+			'handlers/PuppeteerHandler': './src/handlers/PuppeteerHandler.ts',
+			'handlers/PlaywrightHandler': './src/handlers/PlaywrightHandler.ts'
+		},
 		output: {
 			dir: 'dist/cjs',
 			format: 'cjs',
 			sourcemap: true,
 			entryFileNames: '[name].cjs',
-    		chunkFileNames: '[name]-[hash].cjs'
+			chunkFileNames: '[name]-[hash].cjs'
 		},
 		external,
 		plugins: makePlugins('dist/cjs')
 	},
-	// CLI build
-	{
-		input,
+
+	cli: {
+		input: {
+			index: './src/bin/cli.ts',
+			'handlers/PuppeteerHandler': './src/handlers/PuppeteerHandler.ts',
+			'handlers/PlaywrightHandler': './src/handlers/PlaywrightHandler.ts'
+		},
 		output: {
 			dir: 'dist/cli',
 			format: 'esm',
 			sourcemap: true,
 			entryFileNames: 'jellypdf-cli.js'
 		},
-		external: [
-			...external,
-			'./jellypdf'
-		],
+		external: external,
 		plugins: makePlugins('dist/cli')
+	},
+
+	types: {
+		input: './src/types/index.types.ts',
+		output: { file: 'dist/types/index.d.ts', format: 'esm' },
+		plugins: [
+			alias({
+				entries: [
+					{ find: '@types', replacement: path.resolve(__dirname, 'src/types/index.types.ts') },
+					{ find: '@constants', replacement: path.resolve(__dirname, 'src/constants.ts') }
+				]
+			}),
+			dts()
+		]
 	}
-])
+}
+
+export default defineConfig(Object.values(builds))

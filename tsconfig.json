@@ -9,12 +9,12 @@
 		"declaration": true,
 		"baseUrl": ".",
 	    "paths": {
-	    	"@jellypdf": ["src/jellypdf.ts"],
+	    	"@jellypdf": ["src/jellypdf"],
 	    	"@core/*": ["src/core/*"],
       		"@handlers/*": ["src/handlers/*"],
-      		"@config": ["src/config.ts"],
-	    	"@types": ["src/types.ts"],
-	    	"@constants": ["src/constants.ts"]
+	    	"@types": ["src/types/index.types"],
+      		"@config": ["src/config"],
+	    	"@constants": ["src/constants"]
 	    },
 	    "skipLibCheck": true,
 		"removeComments": true,
