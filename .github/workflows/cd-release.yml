@@ -1,0 +1,40 @@
+name: CD - Release on Tag
+
+on:
+
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+
+  release:
+
+    runs-on: ubuntu-latest
+
+    env:
+
+      CI: false
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies & Build
+        run: npm ci
+
+      # - name: Publish NPM Package
+      #   run: npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # - name: Generate Release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     generate_release_notes: true
