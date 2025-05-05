@@ -161,7 +161,7 @@ Here is a detailed table of the available options to customize PDF generation:
 
 | Option                 | Type       | Description                                                                                     | Default Value     |
 |------------------------|------------|-------------------------------------------------------------------------------------------------|-------------------|
-| **engine**             | `string`   | Generation engine (puppeteer or playwright)                                                     | `puppeteer`       |
+| **engine**             | `string`   | Generation engine (`puppeteer` or `playwright`)                                                 | `puppeteer`       |
 | **dpi**                | `number`   | DPI for the conversion                                                                          | `96`              |
 | **format**             | `string`   | Paper format (`Letter`, `Legal`, `Tabloi`, `Ledger`, `A0`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`.) | `A4`              |
 | **landscape**          | `boolean`  | Whether the PDF should be in landscape orientation                                              | `false`           |
