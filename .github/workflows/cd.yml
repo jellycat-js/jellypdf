@@ -5,8 +5,8 @@ on:
   push:
     branches:
       - main
-    tags:
-      - 'v*'
+    # tags:
+    #   - 'v*'
 
 jobs:
 
@@ -24,6 +24,30 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
+      - name: Set up Git
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+
+      - name: Fetch tags
+        run: git fetch --tags
+
+      - name: Get the last tag and increment
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0)
+          
+          VERSION_PARTS=(${LAST_TAG//./ })
+          MAJOR=${VERSION_PARTS[0]#v}
+          MINOR=${VERSION_PARTS[1]}
+          PATCH=${VERSION_PARTS[2]}
+          
+          NEW_PATCH=$((PATCH + 1))
+          
+          TAG_NAME="v${MAJOR}.${MINOR}.${NEW_PATCH}"
+          
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
