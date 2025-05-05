@@ -25,7 +25,7 @@
 	"scripts": {
 		"start": "node ./dist/cli/jellypdf-cli.js",
 		"clean": "rimraf dist",
-		"prepare": "npm run clean && npm run build",
+		"prepare": "if [ \"$CI\" != \"true\" ]; then npm run clean && npm run build; fi",
 		"build": "rollup -c rollup.config.ts --bundleConfigAsCjs",
 		"build:watch": "rollup -c rollup.config.ts --bundleConfigAsCjs --watch",
 		"lint": "eslint --config eslint.config.ts ./src --ext .ts",
