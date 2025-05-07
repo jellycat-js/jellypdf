@@ -48,3 +48,5 @@ export interface TEngineHandler {
 }
 
 export type TEngineHandlerModule = { default: new () => TEngineHandler }
+
+export declare function generatePdf(input: string, output: string | null, providedOptions: Partial<TJellyPdfOptions>): Promise<string | Buffer>;

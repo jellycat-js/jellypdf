@@ -109,7 +109,15 @@ const builds = {
 					{ find: '@constants', replacement: path.resolve(__dirname, 'src/constants.ts') }
 				]
 			}),
-			dts()
+			dts(),
+			{
+		        name: 'unprefix-types',
+		        generateBundle(_, bundle) {
+		        	for (const file of Object.values(bundle)) {
+		        		file.code = file.code.replace(/\bT([A-Z][A-Za-z0-9_]*)\b/g, '$1')
+		        	}
+		        }
+		    }
 		]
 	}
 }
