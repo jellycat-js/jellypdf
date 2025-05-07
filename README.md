@@ -128,32 +128,18 @@ const buffer = await generatePdf('./input.html', null, {
 
 ### TypeScript Support
 
-`jellycat-js/jellypdf` is fully written in TypeScript and includes comprehensive type definitions.
-This ensures seamless integration and type safety when used in TypeScript projects.
+`@jellycat-js/jellypdf` is fully written in TypeScript and ships with comprehensive type definitions.
+This enables seamless integration and strong type safety in TypeScript projects.
 
 #### Importing Types
 
-You can import types directly from the package to leverage TypeScript's static typing:
+You can import types directly from the package using the `import type` syntax:
 
 ```ts
 import type { JellyPDFOptions } from '@jellycat-js/jellypdf'
 ```
 
-This allows for enhanced code completion and type checking in your development environment.
-
-#### Type Definitions
-
-The type definitions are included in the package and are automatically recognized by TypeScript. 
-You don't need to install any additional `@types` packages. The `package.json` specifies the types entry:
-
-```json
-{
-  "types": "./dist/types/jellypdf.d.ts"
-}
-```
-
-This setup ensures that TypeScript can locate and utilize the type definitions without additional configuration.
-
+This improves developer experience with better autocompletion and static type checking.
 
 ## Supported Options / Configuration
 
